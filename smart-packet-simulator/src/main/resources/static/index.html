@@ -1,0 +1,472 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Packet Delivery and Self-Healing Network Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="navbar-inner">
+            <a href="#home" class="navbar-brand" aria-label="Go to Home">
+                <span class="brand-mark">S</span>
+                <span class="brand-name">Smart Packet Simulator</span>
+            </a>
+            <button class="nav-toggle" aria-expanded="false" aria-controls="navbar-menu" aria-label="Toggle navigation menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+            <div class="navbar-menu" id="navbar-menu" role="navigation">
+                <a href="#home" data-view="home">Home</a>
+                <a href="#overview" data-view="overview">Network Overview</a>
+                <a href="#delivery" data-view="delivery">Packet Delivery</a>
+                <a href="#routing" data-view="routing">Routing</a>
+                <a href="#failure" data-view="failure">Failure &amp; Self-Healing</a>
+                <a href="#monitoring" data-view="monitoring">Performance Monitoring</a>
+            </div>
+            <div class="navbar-status" id="navbar-status" aria-live="polite">
+                <span class="status-dot" id="status-dot" aria-hidden="true"></span>
+                <span id="status-text">Backend: unknown</span>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" tabindex="-1">
+        <!-- ======================== HOME ======================== -->
+        <section id="view-home" class="view" aria-labelledby="home-heading" data-view="home">
+            <header class="view-header">
+                <h1 id="home-heading">Smart Packet Delivery and Self-Healing Network Simulator</h1>
+                <p class="lead">Simulate packet delivery across a network topology, observe routing with Dijkstra's shortest path, trigger node and link failures, watch self-healing reroute traffic, and monitor delivery performance.</p>
+            </header>
+
+            <div class="topic-grid" id="topic-grid">
+                <article class="topic-card" data-view="overview" role="button" tabindex="0" aria-label="Open Network Overview">
+                    <div class="topic-icon topic-icon-overview" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Network Overview</h3>
+                    <p>View the current topology: nodes, links, costs, and their active or failed status.</p>
+                    <span class="topic-arrow">Open &rarr;</span>
+                </article>
+
+                <article class="topic-card" data-view="delivery" role="button" tabindex="0" aria-label="Open Packet Delivery">
+                    <div class="topic-icon topic-icon-delivery" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16c0 1 1 2 2 2h12c1 0 2 -1 2 -2V4c0 -1 -1 -2 -2 -2H6c-1 0 -2 1 -2 2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <h3>Packet Delivery</h3>
+                    <p>Choose source and destination, enter a payload, simulate delivery, and view the result with route and cost.</p>
+                    <span class="topic-arrow">Open &rarr;</span>
+                </article>
+
+                <article class="topic-card" data-view="routing" role="button" tabindex="0" aria-label="Open Routing">
+                    <div class="topic-icon topic-icon-routing" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12s1 -1 4 -1 4 1 4 1 4 -1 4 1"/><path d="M6 5L3 12L6 19"/><path d="M18 5L21 12L18 19"/></svg>
+                    </div>
+                    <h3>Routing</h3>
+                    <p>Calculate the selected route between two nodes, view the route path and total cost.</p>
+                    <span class="topic-arrow">Open &rarr;</span>
+                </article>
+
+                <article class="topic-card" data-view="failure" role="button" tabindex="0" aria-label="Open Failure &amp; Self-Healing">
+                    <div class="topic-icon topic-icon-failure" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8V12"/><path d="M12 16h.01"/></svg>
+                    </div>
+                    <h3>Failure &amp; Self-Healing</h3>
+                    <p>Simulate node and link failures, inspect rerouting, and recover components.</p>
+                    <span class="topic-arrow">Open &rarr;</span>
+                </article>
+
+                <article class="topic-card" data-view="monitoring" role="button" tabindex="0" aria-label="Open Performance Monitoring">
+                    <div class="topic-icon topic-icon-monitoring" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10 -12h-9l1 -8z"/></svg>
+                    </div>
+                    <h3>Performance Monitoring</h3>
+                    <p>Packet metrics, charts, packet statistics, and performance snapshots/history.</p>
+                    <span class="topic-arrow">Open &rarr;</span>
+                </article>
+            </div>
+        </section>
+
+        <!-- ======================== NETWORK OVERVIEW ======================== -->
+        <section id="view-overview" class="view" aria-labelledby="overview-heading" data-view="overview">
+            <header class="view-header">
+                <h2 id="overview-heading">Network Overview</h2>
+                <p>Current topology and network status.</p>
+            </header>
+            <div class="view-actions">
+                <button id="ov-load-sample" class="btn" type="button">Load/Reset Sample Topology</button>
+                <button id="ov-refresh-topology" class="btn" type="button">Refresh Topology</button>
+            </div>
+            <div class="ov-meta-grid">
+                <div class="meta-card"><div class="meta-label">Nodes</div><div class="meta-value" id="ov-node-count">0</div></div>
+                <div class="meta-card"><div class="meta-label">Links</div><div class="meta-value" id="ov-link-count">0</div></div>
+                <div class="meta-card"><div class="meta-label">Active Nodes</div><div class="meta-value" id="ov-active-nodes">0</div></div>
+                <div class="meta-card"><div class="meta-label">Failed Nodes</div><div class="meta-value" id="ov-failed-nodes">0</div></div>
+                <div class="meta-card"><div class="meta-label">Active Links</div><div class="meta-value" id="ov-active-links">0</div></div>
+                <div class="meta-card"><div class="meta-label">Failed Links</div><div class="meta-value" id="ov-failed-links">0</div></div>
+            </div>
+            <div class="ov-availability" id="ov-availability" style="display:none;">
+                <h3>Network Availability</h3>
+                <div class="availability-grid">
+                    <div><div class="availability-label">Node Availability</div><div class="availability-value" id="ov-node-availability">--</div></div>
+                    <div><div class="availability-label">Link Availability</div><div class="availability-value" id="ov-link-availability">--</div></div>
+                    <div><div class="availability-label">Overall Availability</div><div class="availability-value" id="ov-overall-availability">--</div></div>
+                </div>
+            </div>
+            <div class="topology-grid">
+                <div class="topology-header">
+                    <div class="topology-info">
+                        <div><strong>Nodes:</strong> <span id="ov-nodes-total">0</span></div>
+                        <div><strong>Links:</strong> <span id="ov-links-total">0</span></div>
+                    </div>
+                </div>
+                <div class="topology-visual" id="ov-topology-visual">
+                    <svg id="ov-topo-svg" viewBox="0 0 760 320" preserveAspectRatio="xMidYMid meet" aria-label="Network topology"></svg>
+                    <p id="ov-topo-empty" class="empty-state" style="display:none;">No topology data. Load the sample topology to visualize the network.</p>
+                </div>
+                <div class="lists">
+                    <div>
+                        <h3>Nodes</h3>
+                        <ul id="ov-nodes-list"></ul>
+                    </div>
+                    <div>
+                        <h3>Links</h3>
+                        <ul id="ov-links-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== PACKET DELIVERY ======================== -->
+        <section id="view-delivery" class="view" aria-labelledby="delivery-heading" data-view="delivery">
+            <header class="view-header">
+                <h2 id="delivery-heading">Packet Delivery</h2>
+                <p>Send a packet between selected source and destination nodes.</p>
+            </header>
+            <div class="delivery-grid">
+                <div class="control-card">
+                    <div class="control-card-header">
+                        <h3>Simulate Delivery</h3>
+                        <p>Choose source and destination, enter a payload, and run the delivery.</p>
+                    </div>
+                    <div class="form-row">
+                        <label>Source <select id="dl-source-select"></select></label>
+                        <label>Destination <select id="dl-dest-select"></select></label>
+                        <label>Payload <input id="dl-payload-input" type="text" value="Hello Network" /></label>
+                    </div>
+                    <div class="button-row">
+                        <button id="dl-deliver-packet" class="btn" type="button">Simulate Packet Delivery</button>
+                    </div>
+                </div>
+                <div class="control-card">
+                    <div class="result-panel">
+                        <div class="result-panel-header">
+                            <h3>Delivery Result</h3>
+                            <span id="dl-result-updated">No delivery attempt yet.</span>
+                        </div>
+                        <div id="dl-result-empty" class="empty-state">No delivery attempt yet. Simulate a packet delivery to see results.</div>
+                        <div id="dl-result-card" class="delivery-result-card" style="display:none;">
+                            <div class="result-status" id="dl-result-status">
+                                <span class="result-dot" aria-hidden="true"></span>
+                                <span id="dl-result-status-text">--</span>
+                            </div>
+                            <div class="result-meta">
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Packet ID</div>
+                                    <div class="result-meta-value" id="dl-result-packet-id">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Source</div>
+                                    <div class="result-meta-value" id="dl-result-source">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Destination</div>
+                                    <div class="result-meta-value" id="dl-result-destination">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Payload</div>
+                                    <div class="result-meta-value" id="dl-result-payload">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Route</div>
+                                    <div class="result-meta-value route-value" id="dl-result-route">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Total route cost</div>
+                                    <div class="result-meta-value" id="dl-result-cost">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Delivery duration</div>
+                                    <div class="result-meta-value" id="dl-result-duration">Not available</div>
+                                </div>
+                                <div class="result-meta-item" id="dl-result-reason-row" style="display:none;">
+                                    <div class="result-meta-label">Failure reason</div>
+                                    <div class="result-meta-value" id="dl-result-reason">--</div>
+                                </div>
+                            </div>
+                            <div class="result-route">
+                                <h4>Route steps</h4>
+                                <div class="route-steps" id="dl-route-steps"></div>
+                            </div>
+                        </div>
+                        <div class="raw-response-wrap">
+                            <button id="dl-toggle-raw" class="btn btn-secondary" type="button">View raw API response</button>
+                            <div id="dl-raw-response" class="raw-response" style="display:none;">
+                                <pre id="dl-delivery-result-raw"></pre>
+                                <button id="dl-copy-raw" class="btn btn-secondary" type="button">Copy response</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== ROUTING ======================== -->
+        <section id="view-routing" class="view" aria-labelledby="routing-heading" data-view="routing">
+            <header class="view-header">
+                <h2 id="routing-heading">Routing</h2>
+                <p>Calculate the selected route between two nodes and view route cost and details.</p>
+            </header>
+            <div class="routing-grid">
+                <div class="control-card">
+                    <div class="control-card-header">
+                        <h3>Calculate Route</h3>
+                        <p>Runs Dijkstra's shortest-path algorithm over the current topology.</p>
+                    </div>
+                    <div class="form-row">
+                        <label>Source <select id="rt-source-select"></select></label>
+                        <label>Destination <select id="rt-dest-select"></select></label>
+                    </div>
+                    <div class="button-row">
+                        <button id="rt-calculate-route" class="btn" type="button">Calculate Route</button>
+                        <button id="rt-recalculate-route" class="btn btn-secondary" type="button">Recalculate (Using Last Route)</button>
+                    </div>
+                </div>
+                <div class="control-card">
+                    <div class="result-panel">
+                        <div class="result-panel-header">
+                            <h3>Route Result</h3>
+                            <span id="rt-result-updated">No route calculated yet.</span>
+                        </div>
+                        <div id="rt-result-empty" class="empty-state">No route calculated yet. Select source and destination, then calculate the route.</div>
+                        <div id="rt-result-card" class="delivery-result-card" style="display:none;">
+                            <div class="result-status" id="rt-result-status">
+                                <span class="result-dot" aria-hidden="true"></span>
+                                <span id="rt-result-status-text">--</span>
+                            </div>
+                            <div class="result-meta">
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Route ID</div>
+                                    <div class="result-meta-value" id="rt-result-packet-id">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Source</div>
+                                    <div class="result-meta-value" id="rt-result-source">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Destination</div>
+                                    <div class="result-meta-value" id="rt-result-destination">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Route</div>
+                                    <div class="result-meta-value route-value" id="rt-result-route">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Total route cost</div>
+                                    <div class="result-meta-value" id="rt-result-cost">--</div>
+                                </div>
+                                <div class="result-meta-item">
+                                    <div class="result-meta-label">Rerouted</div>
+                                    <div class="result-meta-value" id="rt-result-rerouted">No</div>
+                                </div>
+                                <div class="result-meta-item" id="rt-result-message-row" style="display:none;">
+                                    <div class="result-meta-label">Message</div>
+                                    <div class="result-meta-value" id="rt-result-message">--</div>
+                                </div>
+                            </div>
+                            <div class="result-route">
+                                <h4>Route steps</h4>
+                                <div class="route-steps" id="rt-route-steps"></div>
+                            </div>
+                        </div>
+                        <div class="raw-response-wrap">
+                            <button id="rt-toggle-raw" class="btn btn-secondary" type="button">View raw API response</button>
+                            <div id="rt-raw-response" class="raw-response" style="display:none;">
+                                <pre id="rt-route-result-raw"></pre>
+                                <button id="rt-copy-raw" class="btn btn-secondary" type="button">Copy response</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== FAILURE & SELF-HEALING ======================== -->
+        <section id="view-failure" class="view" aria-labelledby="failure-heading" data-view="failure">
+            <header class="view-header">
+                <h2 id="failure-heading">Failure &amp; Self-Healing</h2>
+                <p>Simulate node/link failures, inspect rerouting, and recover components.</p>
+            </header>
+            <div class="failure-grid">
+                <div class="control-card">
+                    <div class="control-card-header">
+                        <h3>Link Controls</h3>
+                        <p>Introduce or recover link failures.</p>
+                    </div>
+                    <div class="form-row">
+                        <label>Fail Link <select id="fl-fail-link-select"></select></label>
+                    </div>
+                    <div class="button-row">
+                        <button id="fl-fail-link-btn" class="btn" type="button">Fail Selected Link</button>
+                    </div>
+                    <div class="form-row">
+                        <label>Recover Link <select id="fl-recover-link-select"></select></label>
+                    </div>
+                    <div class="button-row">
+                        <button id="fl-recover-link-btn" class="btn" type="button">Recover Selected Link</button>
+                    </div>
+                </div>
+                <div class="control-card">
+                    <div class="control-card-header">
+                        <h3>Node Controls</h3>
+                        <p>Introduce or recover node failures.</p>
+                    </div>
+                    <div class="form-row">
+                        <label>Fail Node <select id="fl-fail-node-select"></select></label>
+                    </div>
+                    <div class="button-row">
+                        <button id="fl-fail-node-btn" class="btn" type="button">Fail Selected Node</button>
+                    </div>
+                    <div class="form-row">
+                        <label>Recover Node <select id="fl-recover-node-select"></select></label>
+                    </div>
+                    <div class="button-row">
+                        <button id="fl-recover-node-btn" class="btn" type="button">Recover Selected Node</button>
+                    </div>
+                </div>
+                <div class="control-card">
+                    <div class="control-card-header">
+                        <h3>Failure Status &amp; History</h3>
+                        <p>Inspect current failure state and recorded failure/recovery events.</p>
+                    </div>
+                    <div class="button-row">
+                        <button id="fl-view-failure-status" class="btn" type="button">View Failure Status</button>
+                        <button id="fl-load-history" class="btn" type="button">Load Failure History</button>
+                    </div>
+                </div>
+            </div>
+            <div class="failure-grid results-row">
+                <div class="control-card">
+                    <div class="result-panel">
+                        <div class="result-panel-header">
+                            <h3>Failure / Recovery Result</h3>
+                            <span>Latest response</span>
+                        </div>
+                        <pre id="fl-action-result">No result yet.</pre>
+                    </div>
+                </div>
+                <div class="control-card">
+                    <div class="result-panel">
+                        <div class="result-panel-header">
+                            <h3>Failure Status / History</h3>
+                            <span>Latest response</span>
+                        </div>
+                        <pre id="fl-status-result">No result yet.</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== PERFORMANCE MONITORING ======================== -->
+        <section id="view-monitoring" class="view" aria-labelledby="monitoring-heading" data-view="monitoring">
+            <header class="view-header">
+                <h2 id="monitoring-heading">Performance Monitoring</h2>
+                <p>Packet metrics, charts, packet statistics, and performance snapshots/history.</p>
+            </header>
+            <div class="actions" id="mon-actions">
+                <button id="mon-refresh" class="btn" type="button">Refresh Monitoring</button>
+                <button id="mon-snapshot" class="btn btn-secondary" type="button">Take Snapshot</button>
+            </div>
+            <div id="mon-status" class="monitoring-status">Loading&hellip;</div>
+            <div class="summary-grid" id="mon-summary">
+                <div class="summary-card"><div class="summary-label">Total Packets</div><div class="summary-value" id="m-total-packets">--</div></div>
+                <div class="summary-card"><div class="summary-label">Delivered</div><div class="summary-value" id="m-delivered">--</div></div>
+                <div class="summary-card"><div class="summary-label">Failed</div><div class="summary-value" id="m-failed">--</div></div>
+                <div class="summary-card"><div class="summary-label">In Transit</div><div class="summary-value" id="m-in-transit">--</div></div>
+                <div class="summary-card"><div class="summary-label">Delivery Ratio</div><div class="summary-value" id="m-pdr">--</div></div>
+                <div class="summary-card"><div class="summary-label">Packet Loss Ratio</div><div class="summary-value" id="m-plr">--</div></div>
+                <div class="summary-card"><div class="summary-label">Avg Delivery Time</div><div class="summary-value" id="m-avg-time">--</div></div>
+                <div class="summary-card"><div class="summary-label">Active Nodes</div><div class="summary-value" id="m-active-nodes">--</div></div>
+                <div class="summary-card"><div class="summary-label">Failed Nodes</div><div class="summary-value" id="m-failed-nodes">--</div></div>
+                <div class="summary-card"><div class="summary-label">Active Links</div><div class="summary-value" id="m-active-links">--</div></div>
+                <div class="summary-card"><div class="summary-label">Failed Links</div><div class="summary-value" id="m-failed-links">--</div></div>
+            </div>
+            <div class="availability-grid" id="mon-availability" style="display:none;">
+                <div class="meta-card"><div class="meta-label">Node Availability</div><div class="meta-value" id="m-node-availability">--</div></div>
+                <div class="meta-card"><div class="meta-label">Link Availability</div><div class="meta-value" id="m-link-availability">--</div></div>
+                <div class="meta-card"><div class="meta-label">Overall Availability</div><div class="meta-value" id="m-overall-availability">--</div></div>
+            </div>
+            <div class="charts-grid" id="mon-charts">
+                <div class="chart-panel">
+                    <h3>Delivered vs Failed</h3>
+                    <canvas id="chart-delivery"></canvas>
+                    <p id="chart-delivery-empty" class="chart-empty"></p>
+                </div>
+                <div class="chart-panel">
+                    <h3>Packet Delivery Ratio</h3>
+                    <canvas id="chart-pdr"></canvas>
+                    <p id="chart-pdr-empty" class="chart-empty"></p>
+                </div>
+                <div class="chart-panel">
+                    <h3>Average Delivery Time</h3>
+                    <canvas id="chart-avgtime"></canvas>
+                    <p id="chart-avgtime-empty" class="chart-empty"></p>
+                </div>
+                <div class="chart-panel">
+                    <h3>Network Status Distribution</h3>
+                    <canvas id="chart-network"></canvas>
+                    <p id="chart-network-empty" class="chart-empty"></p>
+                </div>
+                <div class="chart-panel">
+                    <h3>Link Utilization (Simulated)</h3>
+                    <canvas id="chart-links"></canvas>
+                    <p id="chart-links-empty" class="chart-empty"></p>
+                </div>
+            </div>
+            <div>
+                <h3>Packet Delivery Statistics</h3>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Packet ID</th><th>Source</th><th>Destination</th><th>Status</th><th>Delivery Duration (ms)</th><th>Route</th><th>Failure Reason</th></tr>
+                        </thead>
+                        <tbody id="packets-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <h3>Performance History</h3>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Timestamp</th><th>Total</th><th>Delivered</th><th>Failed</th><th>PDR</th><th>Avg Time (ms)</th><th>Active Nodes</th><th>Failed Nodes</th><th>Active Links</th><th>Failed Links</th></tr>
+                        </thead>
+                        <tbody id="history-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
